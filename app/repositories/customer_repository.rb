@@ -9,6 +9,10 @@ class CustomerRepository
     load_csv if File.exist?(@csv_file)
   end
 
+  def find(customer_id)
+    @customers.find{|customer| customer.id == customer_id}
+  end
+
   def all
     @customers
   end
