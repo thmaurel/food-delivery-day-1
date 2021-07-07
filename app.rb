@@ -26,7 +26,7 @@ employee_repository = EmployeeRepository.new("data/employees.csv")
 sessions_controller = SessionsController.new(employee_repository)
 
 order_repository = OrderRepository.new("data/orders.csv", meal_repository, customer_repository, employee_repository)
-orders_controller = OrdersController.new(order_repository)
+orders_controller = OrdersController.new(order_repository, meal_repository, customer_repository, employee_repository)
 
 router = Router.new(meals_controller, customers_controller, sessions_controller, orders_controller)
 router.run

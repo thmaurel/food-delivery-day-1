@@ -8,6 +8,10 @@ class EmployeeRepository
     load_csv if File.exist?(@csv_file)
   end
 
+  def all
+    @employees
+  end
+
   def find(employee_id)
     @employees.find{|employee| employee.id == employee_id}
   end

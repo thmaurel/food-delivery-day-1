@@ -61,7 +61,7 @@ class Router
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
     when 5 then @orders_controller.list_undelivered_orders
-    when 6 then puts "TODO: Add an order"
+    when 6 then @orders_controller.add
     when 7 then sign_out
     when 8 then stop
     else
@@ -71,7 +71,7 @@ class Router
 
   def rider_route_action(action)
     case action
-    when 1 then puts "TODO: Mark as delivered"
+    when 1 then @orders_controller.mark_as_delivered(@employee)
     when 2 then @orders_controller.list_my_undelivered_orders(@employee)
     when 3 then sign_out
     when 4 then stop
