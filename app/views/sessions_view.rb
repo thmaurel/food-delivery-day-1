@@ -1,2 +1,0 @@
-class SessionsView
-end
