@@ -1,8 +1,9 @@
 # TODO: implement the router of your app.
 class Router
-  def initialize(meals_controller)
+  def initialize(meals_controller, customers_controller)
     @running = true
     @meals_controller = meals_controller
+    @customers_controller = customers_controller
   end
 
   def run
@@ -33,8 +34,8 @@ class Router
     case action
     when 1 then @meals_controller.add
     when 2 then @meals_controller.list
-    when 3 then puts "TODO: add a new customer"
-    when 4 then puts "TODO: list all customers"
+    when 3 then @customers_controller.add
+    when 4 then @customers_controller.list
     when 5 then @running = false
     end
   end
