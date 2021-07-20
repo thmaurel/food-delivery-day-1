@@ -5,7 +5,7 @@ Style/ConditionalAssignment:
 Style/StringLiterals:
   Enabled: false
 Layout/LineLength:
-  Max: 120
+  Max: 180
 Lint/UnusedMethodArgument:
   Enabled: false
 Layout/EmptyLines:

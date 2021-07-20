@@ -13,6 +13,10 @@ class BaseRepository
     store_csv
   end
 
+  def find(id)
+    @elements.find{|element| element.id == id}
+  end
+
   def all
     @elements
   end
