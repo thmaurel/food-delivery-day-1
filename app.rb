@@ -23,7 +23,7 @@ order_repo = OrderRepository.new(order_csv, meal_repo, customer_repo, employee_r
 meals_controller = MealsController.new(meal_repo)
 customers_controller = CustomersController.new(customer_repo)
 sessions_controller = SessionsController.new(employee_repo)
-orders_controller = OrdersController.new(order_repo)
+orders_controller = OrdersController.new(order_repo, meal_repo, customer_repo, employee_repo)
 
 router = Router.new(meals_controller, customers_controller, sessions_controller, orders_controller)
 

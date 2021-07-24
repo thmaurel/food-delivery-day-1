@@ -7,6 +7,7 @@ class OrderRepository
     @customer_repository = customer_repository
     @employee_repository = employee_repository
     @orders = []
+    @next_id = 1
     load_csv
   end
 
@@ -23,6 +24,13 @@ class OrderRepository
     save_csv
   end
 
+  def create(order)
+    order.id = @next_id
+    @next_id += 1
+    @orders << order
+    save_csv
+  end
+
   private
 
   def load_csv
@@ -36,6 +44,7 @@ class OrderRepository
         row[:delivered] = row[:delivered] == "true"
       @orders << Order.new(row)
     end
+    @next_id = @orders.empty? ? 1 : @orders.last.id + 1
   end
 
   def save_csv
