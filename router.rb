@@ -47,7 +47,7 @@ class Router
 
   def route_rider_action(action)
     case action
-    when 1 then @orders_controller.mark_as_delivered
+    when 1 then @orders_controller.mark_as_delivered(@employee)
     when 2 then @orders_controller.list_my_orders(@employee)
     when 3 then sign_out
     when 4 then stop

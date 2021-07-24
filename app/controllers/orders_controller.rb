@@ -19,4 +19,19 @@ class OrdersController
     # Display them (view)
     @view.display(orders)
   end
+
+  def mark_as_delivered(current_user)
+    # Get my undelivered orders (repo)
+    orders = @order_repository.my_undelivered_orders(current_user)
+    # Display them (view)
+    @view.display(orders)
+    # Ask user for index (view)
+    index = @view.ask("Which order did you deliver? (index)").to_i - 1
+    # Get the instance from array & index
+    order = orders[index]
+    # Mark it as delivered (repo)
+    @order_repository.mark_as_delivered(order)
+  end
+
+
 end

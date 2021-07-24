@@ -18,6 +18,13 @@ class OrderRepository
     @orders.select{|order| order.delivered? == false && order.employee == current_user}
   end
 
+  def mark_as_delivered(order)
+    order.deliver!
+    save_csv
+  end
+
+  private
+
   def load_csv
     csv_options = { headers: :first_row, header_converters: :symbol }
 
@@ -28,6 +35,16 @@ class OrderRepository
         row[:employee] = @employee_repository.find(row[:employee_id].to_i)
         row[:delivered] = row[:delivered] == "true"
       @orders << Order.new(row)
+    end
+  end
+
+  def save_csv
+    CSV.open(@csv_file_path, 'wb') do |csv|
+
+      csv << ['id', 'delivered', 'meal_id', 'customer_id', 'employee_id']
+      @orders.each do |order|
+        csv << [order.id, order.delivered?, order.meal.id, order.customer.id, order.employee.id]
+      end
     end
   end
 end

@@ -1,5 +1,5 @@
 class Order
-  attr_reader :meal, :customer, :employee
+  attr_reader :id, :meal, :customer, :employee
   def initialize(attributes = {})
     @id = attributes[:id]
     @meal = attributes[:meal]
@@ -10,5 +10,9 @@ class Order
 
   def delivered?
     @delivered
+  end
+
+  def deliver!
+    @delivered = true
   end
 end
