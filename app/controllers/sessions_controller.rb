@@ -1,28 +1,24 @@
 require_relative '../views/sessions_view'
 
 class SessionsController
-  def initialize(employee_repo)
-    @employee_repo = employee_repo
+  def initialize(employee_repository)
     @view = SessionsView.new
+    @employee_repository = employee_repository
   end
 
   def login
-    # Ask user for username (view)
-    username = @view.ask("Username ?")
-    # Ask user for password (view)
-    password = @view.ask("Password ?")
-    # Find if there is an employee with this username (repo)
-    employee = @employee_repo.find_by_username(username)
-    # if yes, Check if the password is correct
-    puts `clear`
+    # Ask for username (view)
+    username = @view.ask("What's your username?")
+    # Ask for password (view)
+    password = @view.ask("What's your password?")
+    # Check if the user exists and if the password is correct (repo)
+    employee = @employee_repository.find_by_username(username)
     if employee && employee.password == password
-      @view.success(employee)
+      @view.successfull_login
       return employee
     else
-      @view.wrong_credentials
+      @view.bad_credentials
       login
     end
-    # if everything is good, we want to display the menu
-    # if not, display an error message and retry the login
   end
 end

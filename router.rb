@@ -1,32 +1,26 @@
-# TODO: implement the router of your app.
 class Router
-  def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
-    @running = true
+  def initialize(meals_controller, customers_controller, sessions_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
-    @orders_controller = orders_controller
+    @running    = true
   end
 
   def run
+    puts "Welcome to the Cookbook!"
+    puts "           --           "
     while @running
-      puts "Welcome in the Food Delivery Application!"
       @employee = @sessions_controller.login
       while @employee
-        # if employee is manager, display manager menu
         if @employee.role == "manager"
-          # Display all the tasks
           display_manager_tasks
-          # Ask the user which action
           action = gets.chomp.to_i
-          puts `clear`
-          # Route the action
+          print `clear`
           route_manager_action(action)
-        # else display rider menu
         else
           display_rider_tasks
           action = gets.chomp.to_i
-          puts `clear`
+          print `clear`
           route_rider_action(action)
         end
       end
@@ -35,50 +29,54 @@ class Router
 
   private
 
-  def display_manager_tasks
-    puts "What do you want to do next?"
-    puts "1. Add a new meal"
-    puts "2. List all the meals"
-    puts "3. Add a new customer"
-    puts "4. List all the customers"
-    puts "5. Add a new order"
-    puts "6. List all undelivered orders"
-    puts "7. Sign out"
-    puts "8. Exit the application"
-  end
-
-  def display_rider_tasks
-    puts "What do you want to do next?"
-    puts "1. List my undelivered orders"
-    puts "2. Mark order as delivered"
-    puts "3. Sign out"
-    puts "4. Exit the application"
-  end
-
   def route_manager_action(action)
     case action
-    when 1 then @meals_controller.add
-    when 2 then @meals_controller.list
-    when 3 then @customers_controller.add
-    when 4 then @customers_controller.list
-    when 5 then @orders_controller.create_order
-    when 6 then @orders_controller.list_all_undelivered
-    when 7 then @employee = nil
-    when 8 then stop
+    when 1 then @meals_controller.list
+    when 2 then @meals_controller.add
+    when 3 then @customers_controller.list
+    when 4 then @customers_controller.add
+    when 5 then sign_out
+    when 6 then stop
+    else
+      puts "Please press 1, 2, 3, 4 or 5"
     end
   end
 
   def route_rider_action(action)
     case action
-    when 1 then @orders_controller.list_my_undelivered(@employee)
-    when 2 then @orders_controller.mark_as_delivered(@employee)
-    when 3 then @employee = nil
+    when 1 then puts "TODO: Mark as delivered"
+    when 2 then puts "TODO: List all my orders"
+    when 3 then sign_out
     when 4 then stop
     end
   end
 
+  def sign_out
+    @employee = nil
+  end
+
   def stop
+    @employee = nil
     @running = false
-    @employee = false
+  end
+
+  def display_manager_tasks
+    puts ""
+    puts "What do you want to do next?"
+    puts "1 - List all meals"
+    puts "2 - Create a new meal"
+    puts "3 - List all customers"
+    puts "4 - Create a new customer"
+    puts "5 - Sign out"
+    puts "6 - Stop and exit the program"
+  end
+
+  def display_rider_tasks
+    puts ""
+    puts "What do you want to do next?"
+    puts "1 - Mark order as delivered"
+    puts "2 - List my undelivered orders"
+    puts "3 - Sign out"
+    puts "4 - Stop and exit the program"
   end
 end

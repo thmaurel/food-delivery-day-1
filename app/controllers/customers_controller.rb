@@ -1,29 +1,29 @@
-require_relative "../views/customers_view"
-require_relative "../models/customer"
+require_relative '../views/customers_view'
 
 class CustomersController
-  def initialize(customer_repo)
-    @view = CustomersView.new
-    @customer_repo = customer_repo
+  def initialize(customer_repository)
+    @customer_repository = customer_repository
+    @customers_view = CustomersView.new
   end
 
-  # Add a new customer
-  def add
-    # Ask the user for name (view)
-    name = @view.ask("What's the name of your customer?")
-    # Ask the user for address (view)
-    address = @view.ask("What's the address of your customer?")
-    # Create a new instance of customer (model)
-    new_customer = Customer.new(name: name, address: address)
-    # Add this instance to our repository (repo)
-    @customer_repo.add(new_customer)
-  end
-
-  # List all the customer
   def list
-    # Get all the customers (repo)
-    customers = @customer_repo.all
-    # Display all of them (view)
-    @view.display(customers)
+    # 1. Get all the meals
+    # @customer_repository = CustomerRepository.new(customers_csv) from app.rb
+    all_customers = @customer_repository.all
+
+    # 2. Give the customers to a CustomersView instance method to display them
+    @customers_view.display(all_customers)
+  end
+
+  def add
+    # 1. Ask user for name and get it
+    given_name = @customers_view.ask_for('name')
+
+    # 2. Ask user for address and get it
+    given_address = @customers_view.ask_for('address')
+
+    # 3. Create a new Customer instance and send it to repo to add to @customers and save to csv
+    new_customer = Customer.new({name: given_name, address: given_address})
+    @customer_repository.create(new_customer)
   end
 end
